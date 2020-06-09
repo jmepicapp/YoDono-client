@@ -11,3 +11,5 @@ export * from './producto';
 export * from './provincia';
 export * from './usuario';
 export * from './rol';
+export * from './donante-front';
+export * from './empresa-front';

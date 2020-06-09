@@ -8,5 +8,4 @@ export class Donacion{
     estado: string;
     donante: Donante;
     empresa: Empresa;
-    
 }
