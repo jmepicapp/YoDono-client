@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     if(this.authService.isAuthenticated()){
-      this.router.navigate(['/empresas']);
+      this.router.navigate(['/home']);
     }
   }
 
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
 
       this.authService.saveUser(response.access_token);
       this.authService.saveToken(response.access_token);
-      this.router.navigate(['/empresas']);
+      this.router.navigate(['/home']);
     },
     error => {
       if(error.status === 401){

@@ -9,6 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
+import { Usuario } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -25,31 +26,33 @@ export class RolGuard implements CanActivate {
     | boolean
     | UrlTree {
     if (!this.authService.isAuthenticated) {
-      if(this.isTokenExpired()){
+      if (this.isTokenExpired()) {
         this.authService.logout();
-        this.router.navigate(['/login']);
+        this.router.navigate(['/home']);
         return false;
-      } 
+      }
     }
-    let rol = next.data['rol'] as string;
-    if (this.authService.hasRole(rol)) {
-      return true;
+    let usuario = JSON.parse(sessionStorage.getItem('usuario')) as Usuario;
+    if (usuario != null){
+      if (this.authService.hasRole(usuario.rol[0])) {
+        return true;
+      }
     }
     Swal.fire({
       icon: 'warning',
       title: 'Acceso denegado',
       text: 'No posees permisos suficientes',
     });
-    this.router.navigate(['/empresas']);
+    this.router.navigate(['/home']);
     return false;
   }
-   
-  isTokenExpired(): boolean{
+
+  isTokenExpired(): boolean {
     let token = this.authService.token;
     let payload = this.authService.decryptToken(token);
     let now = new Date().getTime() / 1000;
 
-    if(payload.exp < now){
+    if (payload.exp < now) {
       return true;
     }
     return false;

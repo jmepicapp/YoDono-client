@@ -4,7 +4,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppSettings } from './requests';
 import { Usuario } from '../models';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -85,8 +84,11 @@ export class AuthService {
   }
 
   hasRole(role: string): boolean {
-    if(this.usuario.rol.nombre === role){
-      return true;
+    if(this.usuario.rol != null){
+      if(this.usuario.rol[0] === role){
+        return true;
+      }
+      return false;
     }
     return false;
   }

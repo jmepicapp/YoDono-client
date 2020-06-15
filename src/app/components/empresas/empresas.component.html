@@ -1,1 +1,45 @@
-Hey there
+
+<div class="alert alert-warning" role="alert" *ngIf="!authService.isAuthenticated()">
+    Inicia sesión para ver las empresas a las que hacer donaciones
+</div>
+
+<div class="card-body text-dark" *ngIf="authService.isAuthenticated()">
+    <h5 class="card-title">Empresas que reciben donaciones</h5>
+
+    <label for="poblacion">¿En qué población quieres donar?</label>
+    <div class="input-group">
+      <input type="text" class="form-control" [(ngModel)]="poblacion" placeholder="Población" name="poblacion" (keyup.enter)="getEmpresasByPoblacion()">
+      <div class="input-group-append">
+        <span class="btn btn-primary" (click)="getEmpresasByPoblacion()">Buscar</span>
+      </div>
+    </div>
+
+    <div class="dropdown-divider my-3"></div>
+
+    <div class="alert alert-warning text-center" role="alert" *ngIf="listaEmpresas.length <= 0">
+      No hay empresas ni instituciones a las que puedas donar en tu población. <br> Te recomendamos buscar una población cercana a tu ubicación.
+    </div>
+  
+    <table class="table table-striped my-3" *ngIf="listaEmpresas.length > 0">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Ubicación</th>
+            <th scope="col" *ngIf="authService.hasRole('ROLE_DONANTE')" class="text-right">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let empresa of listaEmpresas">
+            <th scope="row">{{empresa.nombre | uppercase}}</th>
+            <td *ngIf="empresa.poblacion">{{empresa.poblacion | titlecase}}</td>
+            <td *ngIf="!empresa.poblacion"></td>
+            <td *ngIf="authService.hasRole('ROLE_DONANTE')" class="text-right">
+                <button type="button" [routerLink]="['/solicitud-donacion/form', empresa.id]" class="btn btn-success btn-sm align-right">
+                Realizar donación
+                </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    <app-paginator-nav *ngIf="paginador" [paginador] = "paginador"></app-paginator-nav>
+</div>

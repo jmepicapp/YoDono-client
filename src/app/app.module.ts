@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +11,8 @@ import { EmpresasComponent } from './components/empresas/empresas.component';
 import { LoginComponent } from './components/usuarios/login/login.component';
 import { SharedModule } from './shared/shared.module';
 import { NewAccountComponent } from './components/usuarios/new-account/new-account.component';
+import { HomeComponent } from './components/home/home.component';
+import { SolicitudDonacionComponent } from './components/solicitud-donacion/solicitud-donacion.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,13 +21,16 @@ import { NewAccountComponent } from './components/usuarios/new-account/new-accou
     PaginatorComponent,
     EmpresasComponent,
     LoginComponent,
-    NewAccountComponent
-  ],
+    NewAccountComponent,
+    HomeComponent,
+    SolicitudDonacionComponent
+    ],
   imports: [
     SharedModule,
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

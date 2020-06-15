@@ -31,14 +31,14 @@ export class AuthInterceptor implements HttpInterceptor {
               title: 'Inicie sesión nuevamente',
             });
           }
-          this.router.navigate(['/login']);
+          this.router.navigate(['/home']);
         }
         if (error.status === 403) {
           Swal.fire({
             icon: 'warning',
             title: 'Acceso denegado',
           });
-          this.router.navigate(['/empresas']);
+          this.router.navigate(['/home']);
         }
         return throwError(error);
       })

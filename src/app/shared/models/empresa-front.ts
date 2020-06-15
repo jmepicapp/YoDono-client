@@ -1,10 +1,10 @@
 import { Direccion } from './direccion';
 
 export class EmpresaFront {
-    id: number;
+    id?: number;
     nombre: string;
     telefono: number;
-    direccion: Direccion;
+    poblacion: string;
     email: string;
     password: string;
 }

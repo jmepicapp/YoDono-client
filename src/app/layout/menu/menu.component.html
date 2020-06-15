@@ -1,50 +1,164 @@
 <nav class="navbar navbar-expand-lg navbar-primary bg-primary">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link text-light" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-light" href="#">Link</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Dropdown
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-      <ul class="navbar-nav navbar-right">
-        <li *ngIf="!authService.isAuthenticated()">
-          <app-login></app-login>
-        </li>
-        <li *ngIf="!authService.isAuthenticated()">
-          <app-new-account></app-new-account>
-        </li>
-        <li *ngIf="authService.isAuthenticated()" class="dropdown">
-          <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Tu perfil
-          </a>
-        
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <button (click)="logout()" class="dropdown-item" href="#">Cerrar sesión</button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link text-light" [routerLink]="['/empresas']">Empresas <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav navbar-right mx-5">
+      <li *ngIf="!authService.isAuthenticated()">
+        <app-login></app-login>
+      </li>
+      <li *ngIf="!authService.isAuthenticated()">
+        <app-new-account></app-new-account>
+      </li>
+      <li *ngIf="authService.isAuthenticated()" class="dropdown">
+        <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" (click)='loadUser()'>
+          Tu perfil
+        </a>
+
+        <div class="modal fade" id="modificarDatos" tabindex="-1" role="dialog" aria-labelledby="modificarDatosLabel"
+          aria-hidden="true">
+          <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modificarDatosLabel">Modificar datos de tu perfil</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <form #DonanteForm="ngForm">
+                    <div *ngIf="authService.hasRole('ROLE_DONANTE')">
+                      <div class="form-row">
+                        <div class="form-group col-6">
+                          <input type="text" class="form-control" [(ngModel)]="donante.nombre" name="nombreDonante"
+                            placeholder="Nombre*" required #nombreDonante="ngModel" />
+                          <div class="alert alert-danger"
+                            *ngIf="nombreDonante.invalid && (nombreDonante.dirty || nombreDonante.touched)">
+                            <div *ngIf="nombreDonante.errors.required">
+                              El nombre es obligatorio
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-6">
+                          <input type="text" class="form-control" [(ngModel)]="donante.apellidos"
+                            name="apellidosDonante" placeholder="Apellidos*" required #apellidosDonante="ngModel" />
+                          <div class="alert alert-danger" *ngIf="
+                              apellidosDonante.invalid && (apellidosDonante.dirty || apellidosDonante.touched)
+                            ">
+                            <div *ngIf="apellidosDonante.errors.required">
+                              Los apellidos son obligatorios
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-6">
+                          <input type="email" class="form-control" [(ngModel)]="donante.usuario.email"
+                            name="emailDonante" placeholder="Email*" required disabled #emailDonante="ngModel" />
+                          <div class="alert alert-danger"
+                            *ngIf="emailDonante.invalid && (emailDonante.dirty || emailDonante.touched)">
+                            <div *ngIf="emailDonante.errors.required">
+                              El email es obligatorio
+                            </div>
+                            <div *ngIf="emailDonante.errors.email">
+                              Introduzca un formato de email válido
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-6">
+                          <input type="tel" class="form-control" [(ngModel)]="donante.telefono" name="telefono"
+                            placeholder="Telefono" #telefono="ngModel" />
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col">
+                          <input type="text" class="form-control" name="poblacion" placeholder="Población*"
+                            [(ngModel)]="donante.poblacion" #poblacion="ngModel" required />
+                          <div class="alert alert-danger"
+                            *ngIf="poblacion.invalid && (poblacion.dirty || poblacion.touched)">
+                            <div *ngIf="poblacion.errors.required">
+                              La población es obligatoria
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+                  <form #EmpresaForm="ngForm">
+                    <div *ngIf="authService.hasRole('ROLE_EMPRESA')">
+                      <div class="form-row">
+                        <div class="form-group col-6">
+                          <input type="text" class="form-control" [(ngModel)]="empresa.nombre" name="nombre"
+                            placeholder="Nombre*" required #nombre="ngModel" />
+                          <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                            <div *ngIf="nombre.errors.required">
+                              El nombre es obligatorio
+                            </div>
+                          </div>
+                        </div>
+                        <div class="form-group col-6">
+                          <input type="text" class="form-control" [(ngModel)]="empresa.id" name="id" placeholder="NIF*"
+                            required disabled #id="ngModel" />
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col-6">
+                          <input type="email" class="form-control" [(ngModel)]="empresa.usuario.email" name="email"
+                            placeholder="Email*" #email="ngModel" disabled />
+                        </div>
+                        <div class="form-group col-6">
+                          <input type="tel" class="form-control" [(ngModel)]="empresa.telefono" name="telefono"
+                            placeholder="Telefono" #telefono="ngModel" />
+                        </div>
+                      </div>
+                      <div class="form-row">
+                        <div class="form-group col">
+                          <input type="text" class="form-control" name="poblacion" placeholder="Población*"
+                            [(ngModel)]="empresa.poblacion" #poblacion="ngModel" required />
+                          <div class="alert alert-danger"
+                            *ngIf="poblacion.invalid && (poblacion.dirty || poblacion.touched)">
+                            <div *ngIf="poblacion.errors.required">
+                              La población es obligatoria
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-danger mr-auto" (click)='deleteUser()' data-toggle="modal"
+                  data-target="#modificarDatos">Eliminar cuenta</button>
+                <button type="submit" class="btn btn-primary"
+                  [disabled]="!DonanteForm.form.valid || !EmpresaForm.form.valid" (click)='updateUser()'
+                  data-toggle="modal" data-target="#modificarDatos">Confirmar cambios</button>
+              </div>
+            </div>
           </div>
-        </li>
-      </ul>
-      
-    </div>
-  </nav>
+        </div>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <button type="button" class="dropdown-item" data-toggle="modal" data-target="#modificarDatos">Modificar
+            datos</button>
+          <div class="dropdown-divider"></div>
+          <button (click)="logout()" class="dropdown-item">Cerrar sesión</button>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</nav>

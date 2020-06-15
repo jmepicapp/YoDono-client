@@ -1,184 +1,173 @@
-<button type="button" class="btn btn-dark mx-2" data-toggle="modal" data-target="#exampleModal">Crear cuenta</button>
+<button type="button" class="btn btn-dark mx-2" data-toggle="modal" data-target="#exampleModal">
+  Registrarse
+</button>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">{{titulo}}</h5>
+        <h5 class="modal-title" id="exampleModalLabel">{{ titulo }}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-
         <form>
           <div class="form-row">
             <div class="form-group col">
               <label for="recipient-name" class="col-form-label">¿Eres donante o empresa?</label>
               <select class="form-control" name="tipoCuenta" [(ngModel)]="tipoCuenta" required>
                 <option disabled selected [ngValue]="undefined"></option>
-                <option *ngFor="let tipoCuenta of tipoCuentas" [ngValue]="tipoCuenta">{{tipoCuenta}}</option>
+                <option *ngFor="let tipoCuenta of tipoCuentas" [ngValue]="tipoCuenta">{{ tipoCuenta }}</option>
               </select>
             </div>
           </div>
 
-          <form #newDonanteForm="ngForm" *ngIf="tipoCuenta=='Donante'">
-            <div class="form-row">
-              <div class="form-group col-6">
-                <input type="text" class="form-control" [(ngModel)]="donante.nombre" name="nombre" placeholder="Nombre*" required #nombre="ngModel">
-                <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
-                  <div *ngIf="nombre.errors.required">
-                    El nombre es obligatorio
+          <form #newDonanteForm="ngForm">
+            <div *ngIf="tipoCuenta == 'Donante'">
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <input type="text" class="form-control" [(ngModel)]="donante.nombre" name="nombre"
+                    placeholder="Nombre*" required #nombre="ngModel" />
+                  <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                    <div *ngIf="nombre.errors.required">
+                      El nombre es obligatorio
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-6">
+                  <input type="text" class="form-control" [(ngModel)]="donante.apellidos" name="apellidos"
+                    placeholder="Apellidos*" required #apellidos="ngModel" />
+                  <div class="alert alert-danger" *ngIf="
+                          apellidos.invalid && (apellidos.dirty || apellidos.touched)
+                        ">
+                    <div *ngIf="apellidos.errors.required">
+                      Los apellidos son obligatorios
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="form-group col-6">
-                <input type="text" class="form-control" [(ngModel)]="donante.apellidos" name="apellidos" placeholder="Apellidos*" required #apellidos="ngModel">
-                <div class="alert alert-danger" *ngIf="apellidos.invalid && (apellidos.dirty || apellidos.touched)">
-                  <div *ngIf="apellidos.errors.required">
-                    Los apellidos son obligatorios
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <input type="email" class="form-control" [(ngModel)]="donante.email" name="email" placeholder="Email*"
+                    required #email="ngModel" />
+                  <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <div *ngIf="email.errors.required">
+                      El email es obligatorio
+                    </div>
+                    <div *ngIf="email.errors.email">
+                      Introduzca un formato de email válido
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-6">
+                  <input type="password" class="form-control" [(ngModel)]="donante.password" name="password"
+                    placeholder="Contraseña*" required #password="ngModel" />
+                  <div class="alert alert-danger" *ngIf="
+                          password.invalid && (password.dirty || password.touched)
+                        ">
+                    <div *ngIf="password.errors.required">
+                      La contraseña es obligatoria
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-6">
-                <input type="email" class="form-control" [(ngModel)]="donante.email" name="email" placeholder="Email*" required #email="ngModel">
-                <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
-                  <div *ngIf="email.errors.required">
-                    El email es obligatorio
-                  </div>
-                  <div *ngIf="email.errors.email">
-                    Introduzca un formato de email válido
-                  </div>
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <input type="tel" class="form-control" [(ngModel)]="donante.telefono" name="telefono"
+                    placeholder="Telefono" #telefono="ngModel" />
                 </div>
               </div>
-              <div class="form-group col-6">
-                <input type="password" class="form-control" [(ngModel)]="donante.password" name="password" placeholder="Contraseña*" required #password="ngModel">
-                <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-                  <div *ngIf="password.errors.required">
-                    La contraseña es obligatoria
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-6">
-                <input type="tel" class="form-control" [(ngModel)]="donante.telefono" name="telefono" placeholder="Telefono" required #telefono="ngModel">
-              </div>
-            </div>
-            <p>
-              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
-                aria-expanded="false" aria-controls="collapseExample">
-                Añadir dirección
-              </button>
-            </p>
-            <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-                <div class="form-row">
-                  <div class="form-group col-md-5">
-                    <input type="text" class="form-control" name="direccion.poblacion" placeholder="Comunidad autónoma">
-                  </div>
-                  <div class="form-group col-md-5">
-                    <input type="text" class="form-control" name="direccion.poblacion" placeholder="Población">
-                  </div>
-                  <div class="form-group col-md-4">
-                    <input type="text" class="form-control" name="provincia" placeholder="Provincia">
-                  </div>
-                  <div class="form-group col-md-3">
-                    <input type="number" class="form-control" name="codigoPostal" placeholder="Código postal">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-
-          <form #newEmpresaForm="ngForm" *ngIf="tipoCuenta=='Empresa'">
-            <div class="form-row">
-              <div class="form-group col-6">
-                <input type="text" class="form-control" [(ngModel)]="empresa.nombre" name="nombre" placeholder="Nombre*" required #nombre="ngModel">
-                <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
-                  <div *ngIf="nombre.errors.required">
-                    El nombre es obligatorio
-                  </div>
-                </div>
-              </div>
-              <div class="form-group col-6">
-                <input type="text" class="form-control" [(ngModel)]="empresa.id" name="apellidos" placeholder="NIF*" required #id="ngModel">
-                <div class="alert alert-danger" *ngIf="id.invalid && (id.dirty || id.touched)">
-                  <div *ngIf="id.errors.required">
-                    El NIF es obligatorio
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-6">
-                <input type="email" class="form-control" [(ngModel)]="empresa.email" name="email" placeholder="Email*" required #email="ngModel">
-                <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
-                  <div *ngIf="email.errors.required">
-                    El email es obligatorio
-                  </div>
-                  <div *ngIf="email.errors.email">
-                    Introduzca un formato de email válido
-                  </div>
-                </div>
-              </div>
-              <div class="form-group col-6">
-                <input type="password" class="form-control" [(ngModel)]="empresa.password" name="password" placeholder="Contraseña*" required #password="ngModel">
-                <div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-                  <div *ngIf="password.errors.required">
-                    La contraseña es obligatoria
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-6">
-                <input type="tel" class="form-control" [(ngModel)]="empresa.password" name="telefono" placeholder="Telefono" required #telefono="ngModel">
-              </div>
-            </div>
-            <p>
-              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
-                aria-expanded="false" aria-controls="collapseExample">
-                Añadir dirección
-              </button>
-            </p>
-            <div class="collapse" id="collapseExample">
-              <div class="card card-body">
-                <div class="form-row">
-                  <div class="form-group col-md-5">
-                    <input type="text" class="form-control" name="poblacion" placeholder="Población">
-                  </div>
-                  <div class="form-group col-md-4">
-                    <input type="text" class="form-control" name="provincia" placeholder="Provincia">
-                  </div>
-                  <div class="form-group col-md-3">
-                    <input type="number" class="form-control" name="codigoPostal" placeholder="Código postal">
+              <div class="form-row">
+                <div class="form-group col">
+                  <input type="text" class="form-control" name="poblacion" placeholder="Población*"
+                    [(ngModel)]="donante.poblacion" #poblacion="ngModel" required />
+                  <div class="alert alert-danger" *ngIf="poblacion.invalid && (poblacion.dirty || poblacion.touched)">
+                    <div *ngIf="poblacion.errors.required">
+                      La población es obligatoria
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </form>
 
-        </form>
-
-
-
-
-        <form>
-          <div class="form-group">
-
-          </div>
-          <div class="form-group">
-          </div>
-          <div class="form-group" *ngIf="tipoCuenta=='Empresa'">
-          </div>
+          <form #newEmpresaForm="ngForm">
+            <div *ngIf="tipoCuenta == 'Empresa'">
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <input type="text" class="form-control" [(ngModel)]="empresa.nombre" name="nombreEmpresa"
+                    placeholder="Nombre*" required #nombreEmpresa="ngModel" />
+                  <div class="alert alert-danger"
+                    *ngIf="nombreEmpresa.invalid && (nombreEmpresa.dirty || nombreEmpresa.touched)">
+                    <div *ngIf="nombreEmpresa.errors.required">
+                      El nombre es obligatorio
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-6">
+                  <input type="number" class="form-control" [(ngModel)]="empresa.id" name="id" placeholder="NIF*"
+                    required #id="ngModel" />
+                  <div class="alert alert-danger" *ngIf="id.invalid && (id.dirty || id.touched)">
+                    <div *ngIf="id.errors.required">
+                      El NIF es obligatorio
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <input type="email" class="form-control" [(ngModel)]="empresa.email" name="emailEmpresa"
+                    placeholder="Email*" required #emailEmpresa="ngModel" />
+                  <div class="alert alert-danger"
+                    *ngIf="emailEmpresa.invalid && (emailEmpresa.dirty || emailEmpresa.touched)">
+                    <div *ngIf="emailEmpresa.errors.required">
+                      El email es obligatorio
+                    </div>
+                    <div *ngIf="emailEmpresa.errors.email">
+                      Introduzca un formato de email válido
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-6">
+                  <input type="password" class="form-control" [(ngModel)]="empresa.password" name="passwordEmpresa"
+                    placeholder="Contraseña*" required #passwordEmpresa="ngModel" />
+                  <div class="alert alert-danger" *ngIf="
+                        passwordEmpresa.invalid && (passwordEmpresa.dirty || passwordEmpresa.touched)
+                      ">
+                    <div *ngIf="passwordEmpresa.errors.required">
+                      La contraseña es obligatoria
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <input type="tel" class="form-control" [(ngModel)]="empresa.telefono" name="telefonoEmpresa"
+                    placeholder="Telefono" #telefonoEmpresa="ngModel" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col">
+                  <input type="text" class="form-control" name="poblacionEmpresa" placeholder="Población*"
+                    [(ngModel)]="empresa.poblacion" #poblacionEmpresa="ngModel" required />
+                  <div class="alert alert-danger"
+                    *ngIf="poblacionEmpresa.invalid && (poblacionEmpresa.dirty || poblacionEmpresa.touched)">
+                    <div *ngIf="poblacionEmpresa.errors.required">
+                      La población es obligatoria
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" [disabled]="!newDonanteForm.form.valid && !newEmpresaForm.form.valid">Crear</button>
+      <div class="modal-footer" *ngIf="tipoCuenta == 'Donante' || tipoCuenta == 'Empresa'">
+        <button type="submit" class="btn btn-primary"
+          [disabled]="!newDonanteForm.form.valid || !newEmpresaForm.form.valid" data-dismiss="modal"
+          (click)='newUser()'>Crear {{tipoCuenta}}</button>
       </div>
     </div>
   </div>

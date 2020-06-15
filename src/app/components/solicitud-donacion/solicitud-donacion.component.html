@@ -1,0 +1,12 @@
+<div class="card" *ngIf="authService.isAuthenticated() && authService.hasRole('ROLE_DONANTE')">
+    <h5 class="card-header">Solicitud de donación a <b>{{empresa.nombre | uppercase}}</b> en <b>{{empresa.poblacion | titlecase}}</b> </h5>
+    <div class="card-body">
+      <p class="card-text">
+          <label for="descripcion">¿Qué quieres donar {{donante.nombre | titlecase}}?</label>
+          <textarea class="form-control" name="descripcion" [placeholder]="placeholder" [(ngModel)]="donacion.descripcion"></textarea>
+      </p>
+      <div class="text-right">
+        <button class="btn btn-primary" (click)='send()'>Enviar solicitud de donación</button>
+      </div>
+    </div>
+  </div>

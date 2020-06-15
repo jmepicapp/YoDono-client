@@ -1,0 +1,25 @@
+<div class="alert alert-warning" role="alert" *ngIf="!authService.isAuthenticated()">
+    Inicia sesión para ver las empresas a las que hacer donaciones
+</div>
+
+<div *ngIf="authService.isAuthenticated()"> 
+    <div class="jumbotron text-center" *ngIf="authService.hasRole('ROLE_DONANTE')">
+        <h1 class="display-4">Hola donante</h1>
+        <p class="lead">Gracias por querer ayudar a los demás utilizando YoDono</p>
+        <hr class="my-4">
+        <p>Encuentra a la institución o empresa en tu población</p>
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" [routerLink]="'/empresas'" role="button">Ver empresas</a>
+        </p>
+      </div>
+    
+      <div class="jumbotron text-center" *ngIf="authService.hasRole('ROLE_EMPRESA')">
+        <h1 class="display-4">Hola empresa</h1>
+        <p class="lead">Gracias por gestionar tus donaciones con YoDono</p>
+        <hr class="my-4">
+        <p>Gestiona tus solicitudes de donación</p>
+        <p class="lead">
+          <a class="btn btn-primary btn-lg" href="#" role="button">Ver solicitudes</a>
+        </p>
+      </div>
+</div>

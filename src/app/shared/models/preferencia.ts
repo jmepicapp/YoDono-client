@@ -3,7 +3,7 @@ import { PreferenciaId } from './preferencia-id';
 import { Empresa } from './empresa';
 
 export class Preferencia {
-    id: PreferenciaId;
+    id?: PreferenciaId;
     empresa: Empresa;
     categoriaProducto: CategoriaProducto;
     necesidad: boolean;

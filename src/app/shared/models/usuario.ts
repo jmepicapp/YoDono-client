@@ -1,9 +1,9 @@
 import { Rol } from './rol';
 
 export class Usuario {
-    id: number;
+    id?: number;
     email: string;
-    password: string;
+    password?: string;
     activo: boolean;
     rol: Rol;
 }

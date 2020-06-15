@@ -4,7 +4,7 @@ export class DonanteFront {
     nombre: string;
     apellidos: string;
     telefono: number;
-    direccion: Direccion;
+    poblacion: string;
     email: string;
     password: string;
 }
