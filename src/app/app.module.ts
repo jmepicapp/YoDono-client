@@ -13,6 +13,7 @@ import { SharedModule } from './shared/shared.module';
 import { NewAccountComponent } from './components/usuarios/new-account/new-account.component';
 import { HomeComponent } from './components/home/home.component';
 import { SolicitudDonacionComponent } from './components/solicitud-donacion/solicitud-donacion.component';
+import { SolicitudDonacionFormComponent } from './components/solicitud-donacion/solicitud-donacion-form/solicitud-donacion-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { SolicitudDonacionComponent } from './components/solicitud-donacion/soli
     LoginComponent,
     NewAccountComponent,
     HomeComponent,
-    SolicitudDonacionComponent
+    SolicitudDonacionComponent,
+    SolicitudDonacionFormComponent
     ],
   imports: [
     SharedModule,

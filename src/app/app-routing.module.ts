@@ -5,6 +5,7 @@ import { EmpresasComponent } from './components/empresas/empresas.component';
 import { RolGuard } from './shared/guards/rol.guard';
 import { HomeComponent } from './components/home/home.component';
 import { SolicitudDonacionComponent } from './components/solicitud-donacion/solicitud-donacion.component';
+import { SolicitudDonacionFormComponent } from './components/solicitud-donacion/solicitud-donacion-form/solicitud-donacion-form.component';
 
 
 const routes: Routes = [
@@ -12,7 +13,8 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'empresas', component: EmpresasComponent},
   {path: 'empresas/page/:page', component: EmpresasComponent, canActivate: [RolGuard]},
-  {path: 'solicitud-donacion/form/:id', component: SolicitudDonacionComponent, canActivate: [RolGuard]}
+  {path: 'solicitud-donacion/form/:id', component: SolicitudDonacionFormComponent, canActivate: [RolGuard]},
+  {path: 'solicitud-donacion', component: SolicitudDonacionComponent, canActivate: [RolGuard]}
 ];
 
 @NgModule({

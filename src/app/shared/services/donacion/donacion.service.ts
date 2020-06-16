@@ -29,6 +29,7 @@ export class DonacionService {
   createDonacion(donacion: Donacion): Observable<Donacion>{
     return this.http.post<Donacion>(this.url, donacion).pipe(
       catchError( error => {
+        console.log(error);
         Swal.fire('Error al crear', error.error.mensaje, 'error');
         return throwError(error);
       })

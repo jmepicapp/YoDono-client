@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { Empresa, Donante, Donacion, Usuario } from 'src/app/shared/models';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EmpresaService } from 'src/app/shared/services/empresa/empresa.service';
-import { Empresa, Donante, Usuario, Donacion } from 'src/app/shared/models';
-import { AuthService } from 'src/app/shared/services/auth.service';
 import { DonanteService } from 'src/app/shared/services/donante/donante.service';
 import { DonacionService } from 'src/app/shared/services/donacion/donacion.service';
-import { catchError } from 'rxjs/operators';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
-  selector: 'app-solicitud-donacion',
-  templateUrl: './solicitud-donacion.component.html',
-  styleUrls: ['./solicitud-donacion.component.css'],
+  selector: 'app-solicitud-donacion-form',
+  templateUrl: './solicitud-donacion-form.component.html',
+  styleUrls: ['./solicitud-donacion-form.component.css'],
 })
-export class SolicitudDonacionComponent implements OnInit {
+export class SolicitudDonacionFormComponent implements OnInit {
   placeholder =
     'Escribe aquí lo que quieres donar indicando el máximo de detalles posibles como el tipo de producto o la cantidad.';
   empresa: Empresa = new Empresa();
@@ -42,16 +41,18 @@ export class SolicitudDonacionComponent implements OnInit {
 
   getDonante(): void {
     let usuario = JSON.parse(sessionStorage.getItem('usuario')) as Usuario;
-    this.donanteService.getDonanteByEmail(usuario.email).subscribe(response => {
-      this.donante = response as Donante;
-    });
+    this.donanteService
+      .getDonanteByEmail(usuario.email)
+      .subscribe((response) => {
+        this.donante = response as Donante;
+      });
   }
 
-  send(){
+  send() {
     this.donacion.empresa = this.empresa;
     this.donacion.donante = this.donante;
     console.log(this.donacion);
-    this.donacionService.createDonacion(this.donacion).subscribe(response => {
+    this.donacionService.createDonacion(this.donacion).subscribe((response) => {
       this.router.navigate(['/solicitud-donacion/']);
     });
   }
