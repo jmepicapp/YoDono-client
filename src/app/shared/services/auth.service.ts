@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppSettings } from './requests';
 import { Usuario } from '../models';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class AuthService {
     'Authorization': 'Basic ' + AppSettings.CREDENCIALES
   });
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   public get usuario(): Usuario {
     if(this._usuario != null){
@@ -52,6 +53,7 @@ export class AuthService {
     this._token = null;
     this._usuario = null;
     sessionStorage.clear();
+    this.router.navigate(['/home']);
   }
 
   saveUser(accessToken: string): void {

@@ -1,12 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './layout/menu/menu.component';
 import { FooterComponent } from './layout/footer/footer.component';
-import { PaginatorComponent } from './layout/paginator/paginator.component';
+import { PaginatorEmpresasComponent } from './layout/paginators/paginator-empresas/paginator-empresas.component';
 import { EmpresasComponent } from './components/empresas/empresas.component';
 import { LoginComponent } from './components/usuarios/login/login.component';
 import { SharedModule } from './shared/shared.module';
@@ -14,12 +15,16 @@ import { NewAccountComponent } from './components/usuarios/new-account/new-accou
 import { HomeComponent } from './components/home/home.component';
 import { SolicitudDonacionComponent } from './components/solicitud-donacion/solicitud-donacion.component';
 import { SolicitudDonacionFormComponent } from './components/solicitud-donacion/solicitud-donacion-form/solicitud-donacion-form.component';
+import { NgMaterialIconModule } from "ng-material-icon";
+import { PaginatorDonacionesComponent } from './layout/paginators/paginator-donaciones/paginator-donaciones.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
     FooterComponent,
-    PaginatorComponent,
+    PaginatorEmpresasComponent,
+    PaginatorDonacionesComponent,
     EmpresasComponent,
     LoginComponent,
     NewAccountComponent,
@@ -32,7 +37,9 @@ import { SolicitudDonacionFormComponent } from './components/solicitud-donacion/
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    NgMaterialIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

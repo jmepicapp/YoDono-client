@@ -5,6 +5,7 @@ import { EmpresaService } from 'src/app/shared/services/empresa/empresa.service'
 import { DonanteService } from 'src/app/shared/services/donante/donante.service';
 import { DonacionService } from 'src/app/shared/services/donacion/donacion.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-solicitud-donacion-form',
@@ -29,11 +30,21 @@ export class SolicitudDonacionFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
-      let id = params['id'];
+      let id = params['idEmpresa'];
       if (id) {
         this.empresaService
           .getEmpresa(id)
           .subscribe((empresa) => (this.empresa = empresa));
+      }
+    });
+    this.activatedRoute.params.subscribe((params) => {
+      let id = params['idDonacion'];
+      if (id) {
+        this.donacionService.getDonacion(id).subscribe((donacion) => {
+          this.donacion = donacion;
+          this.empresa = donacion.empresa;
+          this.donante = donacion.donante;
+        });
       }
     });
     this.getDonante();
@@ -51,9 +62,20 @@ export class SolicitudDonacionFormComponent implements OnInit {
   send() {
     this.donacion.empresa = this.empresa;
     this.donacion.donante = this.donante;
-    console.log(this.donacion);
     this.donacionService.createDonacion(this.donacion).subscribe((response) => {
       this.router.navigate(['/solicitud-donacion/']);
+      Swal.fire(
+        'Gracias por donar a ' + this.donacion.empresa.nombre,
+        '',
+        'success'
+      );
+    });
+  }
+
+  update(): void {
+    this.donacionService.update(this.donacion).subscribe((donacion) => {
+      this.router.navigate(['/solicitud-donacion']);
+      Swal.fire('Donación modificada', '', 'success');
     });
   }
 }

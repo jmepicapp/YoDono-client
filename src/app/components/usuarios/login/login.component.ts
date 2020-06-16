@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  titulo: string = 'Iniciar Sesión';
+  titulo: string = 'Iniciar sesión';
   usuario: Usuario;
 
   constructor(

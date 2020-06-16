@@ -17,10 +17,10 @@
     <div class="dropdown-divider my-3"></div>
 
     <div class="alert alert-warning text-center" role="alert" *ngIf="listaEmpresas.length <= 0">
-      No hay empresas ni instituciones a las que puedas donar en tu población. <br> Te recomendamos buscar una población cercana a tu ubicación.
+      No hay empresas ni instituciones a las que puedas donar en la población que has buscado. <br> Intenta buscar otra población cercana a tu ubicación.
     </div>
   
-    <table class="table table-striped my-3" *ngIf="listaEmpresas.length > 0">
+    <table class="table table-hover my-3" *ngIf="listaEmpresas.length > 0">
         <thead>
           <tr>
             <th scope="col">Nombre</th>
@@ -34,12 +34,12 @@
             <td *ngIf="empresa.poblacion">{{empresa.poblacion | titlecase}}</td>
             <td *ngIf="!empresa.poblacion"></td>
             <td *ngIf="authService.hasRole('ROLE_DONANTE')" class="text-right">
-                <button type="button" [routerLink]="['/solicitud-donacion/form', empresa.id]" class="btn btn-success btn-sm align-right">
+                <button type="button" [routerLink]="['/solicitud-donacion/form/empresa', empresa.id]" class="btn btn-success btn-sm align-right">
                 Realizar donación
                 </button>
             </td>
           </tr>
         </tbody>
       </table>
-    <app-paginator-nav *ngIf="paginador" [paginador] = "paginador"></app-paginator-nav>
+    <app-paginator-empresas-nav *ngIf="paginador" [paginador] = "paginador"></app-paginator-empresas-nav>
 </div>

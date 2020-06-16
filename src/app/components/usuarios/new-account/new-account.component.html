@@ -165,6 +165,7 @@
         </form>
       </div>
       <div class="modal-footer" *ngIf="tipoCuenta == 'Donante' || tipoCuenta == 'Empresa'">
+        <p class="mr-auto">* Campos obligatorios</p>
         <button type="submit" class="btn btn-primary"
           [disabled]="!newDonanteForm.form.valid || !newEmpresaForm.form.valid" data-dismiss="modal"
           (click)='newUser()'>Crear {{tipoCuenta}}</button>

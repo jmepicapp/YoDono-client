@@ -13,8 +13,11 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'empresas', component: EmpresasComponent},
   {path: 'empresas/page/:page', component: EmpresasComponent, canActivate: [RolGuard]},
-  {path: 'solicitud-donacion/form/:id', component: SolicitudDonacionFormComponent, canActivate: [RolGuard]},
-  {path: 'solicitud-donacion', component: SolicitudDonacionComponent, canActivate: [RolGuard]}
+  {path: 'solicitud-donacion/form/empresa/:idEmpresa', component: SolicitudDonacionFormComponent, canActivate: [RolGuard]},
+  {path: 'solicitud-donacion/form/:idDonacion', component: SolicitudDonacionFormComponent, canActivate: [RolGuard]},
+  {path: 'solicitud-donacion', component: SolicitudDonacionComponent, canActivate: [RolGuard]},
+  {path: 'solicitud-donacion/page/:page', component: SolicitudDonacionComponent, canActivate: [RolGuard]},
+
 ];
 
 @NgModule({

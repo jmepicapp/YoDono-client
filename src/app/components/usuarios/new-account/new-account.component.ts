@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 })
 export class NewAccountComponent implements OnInit {
 
-  titulo: string = 'Crear cuenta';
+  titulo: string = 'Registrarse';
   tipoCuentas: string[] = ['Donante', 'Empresa'];
   tipoCuenta: string = '';
   donante: DonanteFront = new DonanteFront();
@@ -37,6 +37,7 @@ export class NewAccountComponent implements OnInit {
   }
 
   newDonante(): void {
+    console.log(this.donante);
     this.donanteService.create(this.donante).subscribe(
       donante => {
         this.router.navigate(['/home']);

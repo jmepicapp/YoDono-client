@@ -1,12 +1,18 @@
 <div class="card" *ngIf="authService.isAuthenticated() && authService.hasRole('ROLE_DONANTE')">
-    <h5 class="card-header">Solicitud de donación a <b>{{empresa.nombre | uppercase}}</b> en <b>{{empresa.poblacion | titlecase}}</b> </h5>
-    <div class="card-body">
-      <p class="card-text">
-          <label for="descripcion">¿Qué quieres donar {{donante.nombre | titlecase}}?</label>
-          <textarea class="form-control" name="descripcion" [placeholder]="placeholder" [(ngModel)]="donacion.descripcion"></textarea>
-      </p>
-      <div class="text-right">
-        <button class="btn btn-primary" (click)='send()'>Enviar solicitud de donación</button>
-      </div>
+  <h5 class="card-header">Solicitud de donación a <b>{{empresa.nombre | uppercase}}</b> en
+    <b>{{empresa.poblacion | titlecase}}</b> </h5>
+  <div class="card-body">
+    <p class="card-text">
+      <label for="descripcion">¿Qué quieres donar {{donante.nombre | titlecase}}?</label>
+      <textarea class="form-control" rows="10" name="descripcion" [placeholder]="placeholder" [(ngModel)]="donacion.descripcion"
+        required></textarea>
+    </p>
+    <div class="text-right">
+      <button class="btn btn-primary" (click)='send()' *ngIf="!donacion.id"
+        [disabled]="donacion.descripcion == null || donacion.descripcion === ''">Enviar solicitud de
+        donación</button>
+      <ng-template [ngIf]="donacion.id"><button class="btn btn-primary mx-1" role="button"
+          [disabled]="donacion.descripcion == null || donacion.descripcion === ''" (click)='update()'>Modificar</button></ng-template>
     </div>
   </div>
+</div>

@@ -109,7 +109,7 @@ export class MenuComponent implements OnInit {
               .delete(this.donante.id)
               .subscribe((response) => {
                 this.authService.logout();
-                this.router.navigate[('/empresas')];
+                this.router.navigate[('/home')];
                 swalWithBootstrapButtons.fire(
                   'Cuenta eliminada',
                   'Esperamos verte de vuelta pronto',
@@ -121,7 +121,7 @@ export class MenuComponent implements OnInit {
               .delete(this.empresa.id)
               .subscribe((response) => {
                 this.authService.logout();
-                this.router.navigate[('/empresas')];
+                this.router.navigate[('/home')];
                 swalWithBootstrapButtons.fire(
                   'Cuenta eliminada',
                   'Esperamos verte de vuelta pronto',
